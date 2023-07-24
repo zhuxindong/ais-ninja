@@ -44,7 +44,7 @@ jobs:
           file: ./deploy/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           platforms: linux/amd64,linux/arm64
-          tags: ${{ secrets.DOCKERHUB_USER }}/ais-ninja:${{ github.ref_name }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ais-ninja:latest
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
