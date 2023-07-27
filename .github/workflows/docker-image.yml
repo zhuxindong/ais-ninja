@@ -2,11 +2,9 @@ name: Docker Image CI
 
 on:
   push:
-    tags:
-      - 'v*'
-  pull_request:
-    branches: [ "main" ]
-  workflow_dispatch:
+    branches: [main]
+  release:
+    types: [created] # 表示在创建新的 Release 时触发
 
 jobs:
 
@@ -46,7 +44,7 @@ jobs:
           file: ./deploy/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           platforms: linux/amd64,linux/arm64
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ais-ninja:${{ steps.meta.outputs.tags }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ais-ninja:latest
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
