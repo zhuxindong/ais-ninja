@@ -26,6 +26,7 @@ import stripe from "../../utils/stripe";
 import {Op} from "sequelize";
 import {UserApiKey} from "../../models/UserApiKey";
 import {UserApiKeyUsage} from "../../models/UserApiKeyUsage";
+import { log } from "console";
 
 const router = Router();
 const logger = getLogger('routes:user:user');
@@ -519,6 +520,7 @@ const checkNotifySign = async (payment_id: number, data: { sign: string }, chann
 router.all('/pay/notify', async (req, res) => {
   try {
     let pay_channel = req.query?.channel;
+    logger.info(`pay_channel: ${pay_channel}`);
     if (pay_channel && pay_channel === 'alipay') {
       const {body, out_trade_no, trade_status, trade_no} = req.body;
       const orderInfo = await Order.findByPk(out_trade_no, {raw: true});
@@ -553,15 +555,24 @@ router.all('/pay/notify', async (req, res) => {
         },
         raw: true
       });
+      logger.info(`orderInfo: ${order}`);
       if (!order || order.trade_status !== 'TRADE_AWAIT') {
         res.json('fail');
         return;
       }
       // const {payment_id, user_id, product_id} = JSON.parse(decodeURIComponent(req.query?.param as string));
       const payment_id = order?.payment_id as number;
+      logger.info(`payment_id: ${payment_id}`);
+
       const user_id = order?.user_id;
+      logger.info(`user_id: ${user_id}`);
+
       const product_id = order?.product_id;
+      logger.info(`product_id: ${product_id}`);
+
       const isCheck = await checkNotifySign(payment_id, req.query as { sign: string }, pay_channel);
+      logger.info(`isCheck: ${isCheck}`);
+      
       if (!isCheck) {
         res.json('fail');
         return;
