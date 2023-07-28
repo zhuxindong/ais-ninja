@@ -548,7 +548,8 @@ router.all('/pay/notify', async (req, res) => {
         return;
       }
     }
-    if (pay_channel && pay_channel.includes('yipay')) {
+    
+    if (pay_channel && pay_channel === 'yipay') {
       const {out_trade_no, trade_status, trade_no} = req.query;
       const order = await Order.findOne({
         where: {
