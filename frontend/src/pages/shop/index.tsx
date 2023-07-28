@@ -342,13 +342,15 @@ function GoodsPay() {
 												{t('去支付')}
 											</Button>
 										) : (
-											<QRCode
-												value={payModal.pay_url}
-												color={payInfo[payType].color}
+											<Button
+												type="primary"
 												style={{
 													marginTop: 16
 												}}
-											/>
+												icon={<PayCircleOutlined />}
+											>
+												{t('点击我去支付')}
+											</Button>
 										)}
 									</Link>
 								)
