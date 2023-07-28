@@ -551,9 +551,12 @@ router.all('/pay/notify', async (req, res) => {
     
     if (pay_channel && pay_channel.includes('yipay')) {
       const {out_trade_no, trade_status, trade_no} = req.query;
+      logger.info(`out_trade_no: ${out_trade_no}`);
+      logger.info(`trade_status: ${trade_status}`);
+      logger.info(`trade_no: ${trade_no}`);
       const order = await Order.findOne({
         where: {
-          trade_no: out_trade_no! as string
+          id: out_trade_no! as string
         },
         raw: true
       });
