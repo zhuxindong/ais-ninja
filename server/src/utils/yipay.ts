@@ -24,8 +24,9 @@ async function precreate(base: { api: string, key: string }, config: {}, options
     sign_type: 'MD5',
     ...data
   });
+  logger.info(`yipay-formBody: ${formBody}`);
   const api = base.api + '/pay/apisubmit';
-  logger.info("请求地址:" + api);
+  logger.info("yipai-requrl:" + api);
   const response = await fetch(api, {
     method: 'POST',
     headers: {

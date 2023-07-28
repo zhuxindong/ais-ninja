@@ -519,6 +519,7 @@ const checkNotifySign = async (payment_id: number, data: { sign: string }, chann
 // 支付通知
 router.all('/pay/notify', async (req, res) => {
   try {
+    logger.info(`req: ${JSON.stringify(req.query)}`);
     let pay_channel = req.query?.channel;
     logger.info(`pay_channel: ${pay_channel}`);
     if (pay_channel && pay_channel === 'alipay') {
@@ -547,7 +548,7 @@ router.all('/pay/notify', async (req, res) => {
         return;
       }
     }
-    if (pay_channel && pay_channel === 'yipay') {
+    if (pay_channel && pay_channel.includes('yipay')) {
       const {out_trade_no, trade_status, trade_no} = req.query;
       const order = await Order.findOne({
         where: {
@@ -555,7 +556,7 @@ router.all('/pay/notify', async (req, res) => {
         },
         raw: true
       });
-      logger.info(`orderInfo: ${order}`);
+      logger.info(`orderInfo: ${JSON.stringify(order)}`);
       if (!order || order.trade_status !== 'TRADE_AWAIT') {
         res.json('fail');
         return;
@@ -572,7 +573,7 @@ router.all('/pay/notify', async (req, res) => {
 
       const isCheck = await checkNotifySign(payment_id, req.query as { sign: string }, pay_channel);
       logger.info(`isCheck: ${isCheck}`);
-      
+
       if (!isCheck) {
         res.json('fail');
         return;
