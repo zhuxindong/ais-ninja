@@ -518,7 +518,7 @@ const checkNotifySign = async (payment_id: number, data: { sign: string }, chann
 // 支付通知
 router.all('/pay/notify', async (req, res) => {
   try {
-    let pay_channel = req.body?.channel;
+    let pay_channel = req.query?.channel;
     if (pay_channel && pay_channel === 'alipay') {
       const {body, out_trade_no, trade_status, trade_no} = req.body;
       const orderInfo = await Order.findByPk(out_trade_no, {raw: true});
@@ -557,7 +557,10 @@ router.all('/pay/notify', async (req, res) => {
         res.json('fail');
         return;
       }
-      const {payment_id, user_id, product_id} = JSON.parse(decodeURIComponent(req.query?.param as string));
+      // const {payment_id, user_id, product_id} = JSON.parse(decodeURIComponent(req.query?.param as string));
+      const payment_id = order?.payment_id as number;
+      const user_id = order?.user_id;
+      const product_id = order?.product_id;
       const isCheck = await checkNotifySign(payment_id, req.query as { sign: string }, pay_channel);
       if (!isCheck) {
         res.json('fail');
