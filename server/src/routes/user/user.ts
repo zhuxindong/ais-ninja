@@ -598,7 +598,7 @@ router.all('/pay/notify', async (req, res) => {
   } catch (error) {
     logger.error(`pay notify error: ${error}`);
   }
-  res.json('success');
+  res.send('success');
 });
 
 router.post('/stripe/webhook',
