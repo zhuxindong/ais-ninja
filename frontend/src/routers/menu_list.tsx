@@ -52,7 +52,7 @@ const web = [
 		message: '直接使用API调用智能AI'
 	},
 	{
-		path: 'https://github.com/jarvis2f/ais-ninja',
+		path: 'https://github.com/zhuxindong/ais-ninja',
 		name: '项目地址',
 		icon: <GithubOutlined/>,
 		message: '免费开源可商业化AiWeb项目'
