@@ -34,10 +34,10 @@ function getQueue() {
       const limit = Number(check.hard_limit_usd);
       const usage = Number(check.total_usage);
 
-      if (check.status) {
-        status = 0;
-      }
-      if (limit <= usage) {
+      // if (check.status) {
+      //   status = 0;
+      // }
+      if (limit < usage) {
         status = 0;
       }
       await Token.upsert({
