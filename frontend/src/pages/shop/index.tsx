@@ -81,11 +81,13 @@ function GoodsPay() {
 		order_id?: string
 		pay_url?: string
 		pay_key?: string
+		real_price?: string
 	}>({
 		open: false,
 		status: 'loading',
 		order_id: '',
-		pay_url: ''
+		pay_url: '',
+		real_price: ''
 	})
 
 	useEffect(() => {
@@ -360,9 +362,12 @@ function GoodsPay() {
 										<p>{t('创建订单失败，请重新尝试')}</p>
 									) : payModal.status === 'pay' && payInfo && goods ? (
 										<p>
-											<span>{(goods?.price / 100).toFixed(2)}元</span>
+											{/* <span>{(goods?.price / 100).toFixed(2)}元</span> */}
+											<span>{payModal.real_price}元</span>
 											<br/>
 											{payInfo[payType].message}
+											<br/>
+											<span>请付款{payModal.real_price}元，注意不能多付或少付</span>
 										</p>
 									) : (
 										<p>{t('正在创建订单中...')}</p>

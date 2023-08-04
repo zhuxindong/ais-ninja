@@ -97,6 +97,7 @@ export function postPayPrecreate(params: RequesPrepay) {
 		pay_url: string
 		pay_key: string
 		qrcode?: string
+		real_price: string
 	}>('/api/u/pay/precreate', params)
 }
 

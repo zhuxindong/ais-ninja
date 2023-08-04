@@ -381,7 +381,8 @@ router.post('/pay/precreate', async (req, res) => {
     channel: paymentInfo.channel,
     order_id: out_trade_no,
     pay_url: '',
-    pay_type
+    pay_type,
+    real_price: ''
   };
   const ip: string = utils.getClientIP(req);
   const notifyUrl = `https://${req.get('host')?.split(':')[0]}/api/u/pay/notify?channel=${paymentInfo.channel}`;
@@ -437,6 +438,7 @@ router.post('/pay/precreate', async (req, res) => {
       return;
     }
     responseData.pay_url = yipayPrecreate.pay_url;
+    responseData.real_price = yipayPrecreate.real_price;
   }
 
   if (paymentInfo.channel === 'stripe') {

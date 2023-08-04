@@ -8,7 +8,8 @@ const logger = getLogger('yipay');
 
 async function precreate(base: { api: string, key: string }, config: {}, options: {}): Promise<{
   code: number | any,
-  pay_url: string | any
+  pay_url: string | any,
+  real_price: string | any
 }> {
   const data = utils.filterObjectNull({
     device: 'pc',
@@ -39,11 +40,13 @@ async function precreate(base: { api: string, key: string }, config: {}, options
     payurl?: string
     qrcode?: string
     urlscheme?: string
+    money?: string
   };
   logger.info(`支付结构:${JSON.stringify(json)}`);
   return {
     code: json.code === 1 ? 0 : json.code,
-    pay_url: json.payurl || json.qrcode || json.urlscheme
+    pay_url: json.payurl || json.qrcode || json.urlscheme,
+    real_price: json.money
   };
 }
 
