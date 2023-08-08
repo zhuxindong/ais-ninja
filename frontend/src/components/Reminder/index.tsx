@@ -45,7 +45,7 @@ function Reminder() {
 		<div className={styles.reminder}>
 			<h2 className={styles.reminder_title}>
 				<img src={robotPNG} alt=""/>
-				{t('欢迎来到')} {site_info?.title}
+				{t('欢迎来到')} {site_info?.description}
 			</h2>
 			<p className={styles.reminder_message}>
 				{t('与AI智能聊天，畅想无限可能！基于先进的AI引擎，让你的交流更加智能、高效、便捷！')}
